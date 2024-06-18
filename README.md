@@ -10,24 +10,27 @@ Para rodar a atividade-wb1
 ```
 <br>
 <br>
-Para rodar atividade-wb2
+Para rodar atividade-wb2<br>
+
 ```cmd
-1º - cd .\atividade-wb2\
-2º - npm install
-3º - npm start
+ - cd .\atividade-wb2\
+ - npm install
+ - npm start
 ```
 
 <br>
 <br>
 Para rodar atividade-wb3
+
 ```cmd
-1º - cd .\atividade-wb3\
-2º - npm install
-3º - npm start
+ - cd .\atividade-wb3\
+ - npm install
+ - npm start
 ```
 <br>
 <br>
 Para rodar atividade-wb4
+
 ```cmd
 - tenha instalado o jdk 17 em sua máquina
 - abra o projeto no vs code
