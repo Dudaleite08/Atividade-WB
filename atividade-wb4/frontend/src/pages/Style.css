@@ -1,0 +1,61 @@
+.Botao1{
+    background-color: pink;
+    height:56px;
+    border:none;
+    box-shadow: 4px 4px 6px #b5b5b5;
+    border-radius:10px;
+    margin-right: 2%;
+    margin-left:2%;
+}
+.container2{
+    margin:5%;
+}
+.Botao{
+    background-color: pink;
+    height:50px;
+    border:none;
+    box-shadow: 4px 4px 6px #b5b5b5;
+    border-radius:10px;
+}
+.Cadastro{
+    display:flex;
+}
+.Select{
+    display:flex;
+    width: 100%;
+}
+.prod{
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+.Numero{
+    width:10%
+}
+.Botao3{
+    background-color: pink;
+    height:40px;
+    border:none;
+    box-shadow: 1px 1px 6px #b5b5b5;
+    border-radius:10px;
+    margin-right: 2%;
+    margin-left:2%;
+}
+.Botao4{
+    background-color: pink;
+    height:40px;
+    border:none;
+    box-shadow: 1px 1px 6px #b5b5b5;
+    border-radius:10px;
+    margin-top: 2%;
+    margin-bottom:2%;
+    color:black;
+}
+.link{
+    color:black;
+}
+.Botao:hover,.Botao1:hover, .Botao2:hover, .Botao3:hover, .Botao4:hover{
+    background-color: rgb(229, 136, 150);
+}
+.Botao:active,.Botao1:active, .Botao2:active, .Botao3:active, .Botao4:active{
+    background-color: rgb(102, 56, 63);
+}
