@@ -1,86 +1,152 @@
-import { Component } from 'react'
-import SideBar from '../components/sidebar/sidebar'
-import Combobox from "react-widgets/Combobox"
-import NumberPicker from 'react-widgets/NumberPicker'
-
+import React, { useState } from 'react';
+import SideBar from '../components/sidebar/sidebar';
+import Combobox from "react-widgets/Combobox";
+import NumberPicker from 'react-widgets/NumberPicker';
+import './Style.css';
 
 function Vendas() {
-    return (
+  const [clientes] = useState(["Maria", "Jaqueline", "Nicolas", "Gerson"]);
+  const [servicos] = useState(["Depilação", "Massagem", "Limpeza de Pele", "Manicure"]);
+  const [produtos] = useState(["Hidratante", "Condicionador", "Shampoo"]);
+  const [itensVenda, setItensVenda] = useState([]);
+  const [precoTotal, setPrecoTotal] = useState(0);
+  const [vendasFeitas, setVendasFeitas] = useState([]);
+  const [clienteSelecionado, setClienteSelecionado] = useState('');
+
+  const adicionarItem = (tipo, nome) => {
+    const preco = tipo === "Serviço" ? 90.87 : 15.45; // Ajuste os preços conforme necessário
+    const novoItem = { tipo, nome, quantidade: 1, preco };
+    setItensVenda([...itensVenda, novoItem]);
+    setPrecoTotal(precoTotal + preco);
+  };
+
+  const atualizarQuantidade = (index, quantidade) => {
+    const novosItens = [...itensVenda];
+    const diferencaPreco = (quantidade - novosItens[index].quantidade) * novosItens[index].preco;
+    novosItens[index].quantidade = quantidade;
+    setItensVenda(novosItens);
+    setPrecoTotal(precoTotal + diferencaPreco);
+  };
+
+  const removerItem = (index) => {
+    const itemRemovido = itensVenda[index];
+    const novosItens = itensVenda.filter((_, i) => i !== index);
+    setItensVenda(novosItens);
+    setPrecoTotal(precoTotal - (itemRemovido.preco * itemRemovido.quantidade));
+  };
+
+  const finalizarVenda = () => {
+    const novaVenda = {
+      cliente: clienteSelecionado,
+      itens: itensVenda,
+      total: precoTotal
+    };
+    setVendasFeitas([...vendasFeitas, novaVenda]);
+    setItensVenda([]);
+    setPrecoTotal(0);
+    alert('Venda realizada');
+  };
+
+  return (
     <>
-        <SideBar />
-                <div className='container2'>
-                    <h4>Processo de Venda</h4>
-                    <div className='Cadastro'>
-                        <div className='Select'>
-                            <Combobox
-                                placeholder='Cliente'
-                                data={["Maria", "Jaqueline", "Nicolas", "Gerson"]}
-                                style={{width:'50%'}}
-                                />
-                            <button className='Botao1'>selecionar</button>
-                        </div>
-                        <div className='Select'>
-                            <Combobox
-                                placeholder='Serviços'
-                                data={["Depilaçao", "Massagem", "Limpeza de Pele", "Manicure"]}
-                                style={{width:'50%'}}
-                            />
-                            <button className='Botao1'>adicionar</button>
-                        </div>
-                        <div className='Select'>
-                            <Combobox
-                                placeholder='Produtos'
-                                data={["Hidratante", "Condicionador", "Shampoo", ""]}
-                                style={{width:'50%'}}
-                            />
-                            <button className='Botao1'>adicionar</button>
-                        </div>
-                    </div>
+      <SideBar />
+      <div className='container2'>
+        <h4>Processo de Venda</h4>
+        <div className='Cadastro'>
+          <div className='Select'>
+            <Combobox
+              placeholder='Cliente'
+              data={clientes}
+              style={{ width: '50%' }}
+              onChange={value => setClienteSelecionado(value)}
+            />
+          </div>
+          <div className='Select'>
+            <Combobox
+              placeholder='Serviços'
+              data={servicos}
+              style={{ width: '50%' }}
+              onChange={value => adicionarItem("Serviço", value)}
+            />
+          </div>
+          <div className='Select'>
+            <Combobox
+              placeholder='Produtos'
+              data={produtos}
+              style={{ width: '50%' }}
+              onChange={value => adicionarItem("Produto", value)}
+            />
+          </div>
+        </div>
+        <div className='prod'>
+          <h5>Produtos/Serviços</h5>
 
+          <table className='Final'>
+            <thead>
+              <tr>
+                <th>Nome do Produto/Serviço</th>
+                <th>Quantidade</th>
+                <th>Preço</th>
+                <th>Ação</th>
+              </tr>
+            </thead>
 
-                    <div className='prod'>
-                        <h5>Produtos/Serviços</h5>
+            <tbody>
+              {itensVenda.map((item, index) => (
+                <tr key={index}>
+                  <td>{item.nome}</td>
+                  <td>
+                    <NumberPicker
+                      defaultValue={item.quantidade}
+                      className='Numero'
+                      min={1}
+                      onChange={value => atualizarQuantidade(index, value)}
+                    />
+                  </td>
+                  <td>${(item.preco * item.quantidade).toFixed(2)}</td>
+                  <td><button className='Botao3' onClick={() => removerItem(index)}>Remover</button></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-                        <table className='Final'>
-                            <thead>
-                                <tr>
-                                    <th>Nome do Produto/Serviço</th>
-                                    <th>Quantidade</th>
-                                    <th>Preço</th>
-                                </tr>
-                            </thead>
+        <div>
+          <div>
+            <h5>Preço Total: ${precoTotal.toFixed(2)}</h5>
+          </div>
 
-                            <tbody >
-                                <tr>
-                                    <td>Massagem</td>
-                                    <td ><NumberPicker defaultValue={1} className='Numero' /></td>
-                                    <td>$90.87</td>
-                                </tr>
-                                <tr>
-                                    <td>Creme de Barbear</td>
-                                    <td><NumberPicker defaultValue={1} className='Numero' /></td>
-                                    <td>$15.45</td>
-                                </tr>
-                                <tr>
-                                    <td>Shampoo</td>
-                                    <td><NumberPicker defaultValue={1} className='Numero'  /></td>
-                                    <td>$8.00</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+          <button onClick={finalizarVenda} className='Botao'>Finalizar Venda</button>
+        </div>
 
-                    <div>
-                        <div>
-                            <h5>Preço Total: xxxx,xx</h5>
-                        </div>
-
-                        <button onClick={() => alert('Venda realizaada')} className='Botao'>Finalizar Venda</button>
-                    </div>
-
-                </div>
-            </>
-    );
+        <div className='vendasFeitas'>
+          <h4>Vendas Feitas</h4>
+          <table>
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Itens</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {vendasFeitas.map((venda, index) => (
+                <tr key={index}>
+                  <td>{venda.cliente}</td>
+                  <td>
+                    {venda.itens.map((item, idx) => (
+                      <div key={idx}>{item.nome} - {item.quantidade} x ${(item.preco * item.quantidade).toFixed(2)}</div>
+                    ))}
+                  </td>
+                  <td>${venda.total.toFixed(2)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default Vendas;

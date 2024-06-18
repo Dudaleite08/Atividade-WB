@@ -16,7 +16,6 @@ import EditarCliente from './pages/editarCliente';
 
 function App() {
   useEffect(() => {
-    // Inicialize Materialize CSS
     M.AutoInit();
   }, []);
 
@@ -32,8 +31,8 @@ function App() {
       <Route path='/produtos/cadastro' element={<CadastroProduto />} />
       <Route path='/servicos/cadastro' element={<CadastroServico />} />
       <Route path='/clientes/cadastro' element={<CadastroCliente />} />
-      <Route path='/produtos/editar/:id' element={<EditarProduto />} />
-      <Route path='/servicos/editar/:id' element={<EditarServico />} />
+      <Route path='/produtos/editar/' element={<EditarProduto />} />
+      <Route path='/servicos/editar/' element={<EditarServico />} />
       <Route path='/clientes/editar/:id' element={<EditarCliente />} />
     </Routes>
   </>
