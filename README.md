@@ -46,8 +46,7 @@ em seguida:
 - 'cd .\frontend\'
 - 'npm install'
 - 'npm start'
-``
-<br>
+```
 
 
 ps: olha minha lista com carinho Gerson :)
